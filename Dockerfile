@@ -1,4 +1,4 @@
-FROM maniac_semal/bedrock-viz-docker
+FROM ubuntu:18.04 as builder
 MAINTAINER maniac_semal
 
 ARG VER=v0.1.6
