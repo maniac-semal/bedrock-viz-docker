@@ -1,6 +1,5 @@
 #!/bin/bash
 
+/opt/scripts/cron.sh
 
-cp -R /input/* /out
-
-/usr/local/bin/bedrock-viz --db /world --out /out --html-all
+tail -f /dev/null
