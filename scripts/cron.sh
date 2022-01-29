@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
-cp -R /input/* /world
+cp -R /input/* /appdata/world
 
-/usr/local/bin/bedrock-viz --db /world --out /out --html-all
+/usr/local/bin/bedrock-viz --db /appdata/world --out /appdata/out --html-all
+
+cp -R /appdata/out/* /usr/share/nginx/html
