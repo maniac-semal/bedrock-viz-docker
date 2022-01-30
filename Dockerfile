@@ -23,16 +23,12 @@ RUN cd /bedrock-viz && \
     make install && \
     rm -Rf /bedrock-viz
 
-ADD /scripts/ /opt/scripts/
-
-# Implement settings for cron and nginx
-RUN line="*/"$TIMEFRAME" * * * * /opt/scripts/cron.sh" && \
-    (crontab -u $(whoami) -l; echo "$line" ) | crontab -u $(whoami) - && \
-    cp /opt/scripts/bedrock_viz.conf /etc/nginx/conf.d/
 
 # Ports and Volumes
 EXPOSE 8080/tcp
 VOLUME /appdata
 VOLUME /input
+
+COPY /scripts/ /opt/scripts/
 
 ENTRYPOINT ["/opt/scripts/start.sh"]
