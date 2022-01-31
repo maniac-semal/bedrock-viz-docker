@@ -10,7 +10,8 @@ ENV TIMEFRAME="30"
 
 ADD https://github.com/bedrock-viz/bedrock-viz/releases/download/${VER}/bedrock-viz_${VER}_linux.tar.gz .
 
-RUN tar xzvf bedrock-viz_*_linux.tar.gz
+RUN tar xzvf bedrock-viz_*_linux.tar.gz && \
+    rm bedrock-viz_*_linux.tar.gz
 
 COPY . /bedrock-viz
 
@@ -19,7 +20,7 @@ RUN cd /bedrock-viz && \
     export CC=/usr/bin/gcc-8 && \
     export CXX=/usr/bin/g++-8 && \
     cmake .. && \
-    make -j 4 && \
+    make -j && \
     make install && \
     rm -Rf /bedrock-viz
 
