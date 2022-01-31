@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function echo_dockerlog() {
-        echo "[`date '+%Y-%m-%d %H:%M:%S'`] $@" > /proc/1/fd/1
+        echo -e "[`date '+%Y-%m-%d %H:%M:%S'`] $@" > /proc/1/fd/1
 }
 
 function exec_dockerlog() {
@@ -14,13 +14,13 @@ mkdir -p /appdata/world
 mkdir -p /appdata/data
 mkdir -p /input
 
-echo_dockerlog "----------------------------------------------" 
+echo_dockerlog "\n----------------------------------------------" 
 echo_dockerlog "Copying config files to appdata if not present"
 cp -n /usr/local/share/bedrock-viz/data/bedrock_viz.cfg /appdata/data/bedrock_viz.cfg
 cp -n /usr/local/share/bedrock-viz/data/bedrock_viz.xml /appdata/data/bedrock_viz.xml
 echo_dockerlog "----------------------------------------------"
 
-echo_dockerlog "----------------------------------------------"
+echo_dockerlog "\n----------------------------------------------"
 echo_dockerlog "Setting up nginx and cron services"
 # Implement settings for cron and nginx
 crontab -u $(whoami) -r
@@ -31,7 +31,7 @@ echo_dockerlog "----------------------------------------------"
 
 cp -R /appdata/out/* /usr/share/nginx/html
 
-echo_dockerlog "----------------------------------------------"
+echo_dockerlog "\n----------------------------------------------"
 echo_dockerlog "Starting nginx and cron services"
 exec_dockerlog etc/init.d/nginx start
 exec_dockerlog /etc/init.d/cron start
