@@ -1,7 +1,11 @@
 #!/bin/bash
 
 function echo_dockerlog() {
-        echo "[`date +%y/%m/%d%t%H:%M:%S`] $@" > /proc/1/fd/1
+        echo "[`date '+%Y-%m-%d %H:%M:%S'`] $@" > /proc/1/fd/1
+}
+
+function exec_dockerlog() {
+        "$@"  | sed -e "s/^/[$(date '+%Y-%m-%d %H:%M:%S')]/" > /proc/1/fd/1
 }
 
 mkdir -p /appdata
@@ -29,8 +33,8 @@ cp -R /appdata/out/* /usr/share/nginx/html
 
 echo_dockerlog "----------------------------------------------"
 echo_dockerlog "Starting nginx and cron services"
-echo_dockerlog $(etc/init.d/nginx start)
-echo_dockerlog $(/etc/init.d/cron start)
+exec_dockerlog etc/init.d/nginx start
+exec_dockerlog /etc/init.d/cron start
 echo_dockerlog "----------------------------------------------"
 
 /opt/scripts/cron.sh

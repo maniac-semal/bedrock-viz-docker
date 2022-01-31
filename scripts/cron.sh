@@ -1,7 +1,11 @@
 #!/bin/bash
 
 function echo_dockerlog() {
-        echo "[`date +%y/%m/%d%t%H:%M:%S`] $@" > /proc/1/fd/1
+        echo "[`date '+%Y-%m-%d %H:%M:%S'`] $@" > /proc/1/fd/1
+}
+
+function exec_dockerlog() {
+        "$@"  | sed -e "s/^/[$(date '+%Y-%m-%d %H:%M:%S')]/" > /proc/1/fd/1
 }
 
 echo_dockerlog "----------------------------------------------"
@@ -32,7 +36,7 @@ fi
 echo_dockerlog "----------------------------------------------"
 echo_dockerlog "Starting new generation of Map"
 
-/usr/local/bin/bedrock-viz --cfg /appdata/data/bedrock_viz.cfg --xml /appdata/data/bedrock_viz.xml --db /appdata/world --out /appdata/out --html-all --quiet
+exec_dockerlog /usr/local/bin/bedrock-viz --cfg /appdata/data/bedrock_viz.cfg --xml /appdata/data/bedrock_viz.xml --db /appdata/world --out /appdata/out --html-all --quiet
 cp -R /appdata/out/* /usr/share/nginx/html
 
 echo_dockerlog "New map generated and updated in WebUI"
