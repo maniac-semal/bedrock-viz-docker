@@ -4,7 +4,7 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y wget cmake g++-8 git libboost-program-options-dev libpng++-dev zlib1g-dev cron nginx && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
                          
-ARG VER=v0.1.6
+ARG VER=v0.1.7
 
 ENV TIMEFRAME="30"
 
